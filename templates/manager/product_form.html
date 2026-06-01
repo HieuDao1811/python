@@ -1,0 +1,27 @@
+{% extends "manager/base_admin.html" %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="admin-section">
+    <form method="post" enctype="multipart/form-data" class="admin-form">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-row">
+                <label>{{ field.label }}</label>
+                {{ field }}
+
+                {% for error in field.errors %}
+                    <small class="error">{{ error }}</small>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button class="admin-btn" type="submit">Lưu</button>
+        <a class="admin-btn secondary" href="{% url 'admin_product_list' %}">Quay lại</a>
+    </form>
+</div>
+
+{% endblock %}
