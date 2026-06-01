@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1>Đặt hàng thành công!</h1>
+    <p>Mã đơn hàng: #{{ order.id }}</p>
+    <p>Tổng tiền: {{ order.total_price|floatformat:0 }} VND</p>
+    <p>Trạng thái: {{ order.get_status_display }}</p>
+
+    <a class="btn btn-primary" href="/">Tiếp tục mua hàng</a>
+</div>
+{% endblock %}

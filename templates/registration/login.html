@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập | Tea Shop AI</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+
+<main class="auth-page">
+    <section class="auth-visual">
+        <div class="auth-overlay"></div>
+
+        <div class="brand-box">
+            <div class="brand-mark">茶</div>
+            <h1>Tea Shop AI</h1>
+            <p>Tinh hoa trà Nhật trong từng lựa chọn.</p>
+        </div>
+
+        <div class="visual-caption">
+            <span>Japanese Tea Experience</span>
+            <h2>Nơi nghệ thuật thưởng trà gặp gỡ AI.</h2>
+        </div>
+    </section>
+
+    <section class="auth-content">
+        <div class="auth-card">
+            <p class="eyebrow">Welcome back</p>
+            <h2>Đăng nhập khách hàng</h2>
+            <p class="subtitle">
+                Đăng nhập để khám phá các dòng trà cao cấp và nhận gợi ý từ AI.
+            </p>
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                <div class="field-group">
+                    <label for="{{ form.username.id_for_label }}">Tên đăng nhập</label>
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                        <small class="field-error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <div class="field-group">
+                    <label for="{{ form.password.id_for_label }}">Mật khẩu</label>
+                    {{ form.password }}
+                    {% for error in form.password.errors %}
+                        <small class="field-error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="auth-btn">Đăng nhập</button>
+            </form>
+
+            <p class="switch-link">
+                Chưa có tài khoản?
+                <a href="{% url 'register' %}">Đăng ký ngay</a>
+            </p>
+
+            <p class="admin-note">
+                Quản trị viên đăng nhập tại
+                <a href="/admin/">Django Admin</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

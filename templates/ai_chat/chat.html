@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-panel">
+    <div>
+        <h1>AI tư vấn chọn trà</h1>
+        <p>Hãy nhập nhu cầu của bạn, AI sẽ gợi ý trà phù hợp và hiển thị sản phẩm tương ứng.</p>
+    </div>
+</div>
+
+<div class="grid-wide">
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Nhập nhu cầu</label>
+                <textarea name="question" rows="4" placeholder="Ví dụ: Tôi muốn mua trà dễ ngủ dưới 200 nghìn" required>{{ question|default:'' }}</textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Hỏi AI</button>
+        </form>
+    </div>
+
+    {% if answer %}
+        <div class="card">
+            <h2>AI trả lời</h2>
+            <p>{{ answer|linebreaks }}</p>
+        </div>
+    {% endif %}
+</div>
+
+{% if products %}
+    <div>
+        <h2>Sản phẩm AI tìm được</h2>
+        <div class="grid">
+            {% for product in products %}
+                <article class="product-card card">
+                    {% if product.image %}
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <span class="badge">{{ product.category.name }}</span>
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.taste }}</p>
+                    <p class="price">{{ product.price|floatformat:0 }} VND</p>
+                    <a class="btn btn-primary" href="{% url 'product_detail' product.id %}">Xem sản phẩm</a>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

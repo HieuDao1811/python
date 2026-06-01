@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-panel compact">
+    <div>
+        <h1>Lịch sử đơn hàng</h1>
+        <p>Xem lại các đơn hàng đã đặt và trạng thái xử lý.</p>
+    </div>
+</div>
+
+{% if orders %}
+    <div class="grid">
+        {% for order in orders %}
+            <div class="card">
+                <h3>Đơn hàng #{{ order.id }}</h3>
+                <p>Tổng tiền: {{ order.total_price|floatformat:0 }} VND</p>
+                <p>Trạng thái: {{ order.get_status_display }}</p>
+                <p>Ngày đặt: {{ order.created_at|date:'d/m/Y H:i' }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card">
+        <p>Bạn chưa có đơn hàng.</p>
+    </div>
+{% endif %}
+{% endblock %}

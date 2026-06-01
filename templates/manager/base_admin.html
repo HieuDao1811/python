@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tea Shop AI Admin</title>
+    <link rel="stylesheet" href="{% static 'css/admin_panel.css' %}">
+</head>
+<body>
+
+<div class="admin-layout">
+    <aside class="sidebar">
+        <h2>Tea Admin</h2>
+        <p>Quản trị hệ thống</p>
+
+        <nav>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+            <a href="{% url 'admin_product_list' %}">Sản phẩm</a>
+            <a href="{% url 'admin_category_list' %}">Danh mục</a>
+            <a href="{% url 'admin_order_list' %}">Đơn hàng</a>
+            <a href="{% url 'admin_chat_history' %}">Lịch sử AI</a>
+            <a href="{% url 'product_list' %}">Xem website</a>
+            <a href="{% url 'logout' %}">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <div>
+                <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+                <p>Xin chào, {{ request.user.username }}</p>
+            </div>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+{% extends "manager/base_admin.html" %}
+
+{% block page_title %}Dashboard quản trị{% endblock %}
+
+{% block content %}
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <span>Doanh thu hoàn thành</span>
+        <h2>{{ total_revenue }} VND</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Doanh thu tất cả đơn</span>
+        <h2>{{ all_revenue }} VND</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Tổng đơn hàng</span>
+        <h2>{{ total_orders }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Đơn chờ xử lý</span>
+        <h2>{{ pending_orders }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Đơn hoàn thành</span>
+        <h2>{{ completed_orders }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Sản phẩm</span>
+        <h2>{{ total_products }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Danh mục</span>
+        <h2>{{ total_categories }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Khách hàng</span>
+        <h2>{{ total_users }}</h2>
+    </div>
+</div>
+
+<div class="admin-section">
+    <h2>Đơn hàng gần đây</h2>
+
+    <table>
+        <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>SĐT</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Ngày đặt</th>
+        </tr>
+
+        {% for order in recent_orders %}
+        <tr>
+            <td>#{{ order.id }}</td>
+            <td>{{ order.full_name }}</td>
+            <td>{{ order.phone }}</td>
+            <td>{{ order.total_price }} VND</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.created_at }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Chưa có đơn hàng.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="admin-section">
+    <h2>Sản phẩm bán chạy</h2>
+
+    {% for item in top_products %}
+        <p>{{ item.product__name }} - Đã bán: {{ item.total_sold }}</p>
+    {% empty %}
+        <p>Chưa có dữ liệu.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

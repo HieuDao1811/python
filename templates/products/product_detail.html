@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid-wide">
+    <section class="card">
+        {% if product.image %}
+            <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% endif %}
+    </section>
+    <section class="card">
+        <span class="badge">{{ product.category.name }}</span>
+        <h1>{{ product.name }}</h1>
+        <p class="price">{{ product.price|floatformat:0 }} VND</p>
+        <dl class="details-list">
+            <dt>Hương vị</dt>
+            <dd>{{ product.taste }}</dd>
+            <dt>Thành phần</dt>
+            <dd>{{ product.ingredients }}</dd>
+            <dt>Công dụng</dt>
+            <dd>{{ product.benefit }}</dd>
+        </dl>
+        <p>{{ product.description }}</p>
+        <a class="btn btn-primary" href="{% url 'add_to_cart' product.id %}">Thêm vào giỏ hàng</a>
+    </section>
+</div>
+
+<div>
+    <h2>Sản phẩm liên quan</h2>
+    <div class="grid">
+        {% for item in related_products %}
+            <article class="card small-card">
+                <h3>{{ item.name }}</h3>
+                <p class="price">{{ item.price|floatformat:0 }} VND</p>
+                <a class="btn btn-secondary" href="{% url 'product_detail' item.id %}">Xem</a>
+            </article>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

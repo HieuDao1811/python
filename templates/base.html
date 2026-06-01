@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tea Shop AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f7f2;
+        }
+
+        header {
+            background: #2f5d3a;
+            color: white;
+            padding: 16px 40px;
+        }
+
+        nav a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #ddd;
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 14px;
+            background: #2f5d3a;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 14px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>Tea Shop AI</h2>
+    <nav>
+        {% if user.is_authenticated %}
+            <a href="{% url 'product_list' %}">Trang chủ</a>
+            <a href="/cart/">Giỏ hàng</a>
+            <a href="/orders/history/">Đơn hàng của tôi</a>
+            <a href="/ai/">AI tư vấn trà</a>
+
+            {% if user.is_staff or user.is_superuser %}
+                <a href="/dashboard/">Dashboard</a>
+                <a href="/admin/">Django Admin</a>
+            {% endif %}
+
+            <span>Xin chào, {{ user.username }}</span>
+            <a href="{% url 'logout' %}">Đăng xuất</a>
+        {% else %}
+            <a href="{% url 'login' %}">Đăng nhập</a>
+            <a href="{% url 'register' %}">Đăng ký</a>
+        {% endif %}
+    </nav>
+</header>
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

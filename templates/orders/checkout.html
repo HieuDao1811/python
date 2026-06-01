@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-panel compact">
+    <div>
+        <h1>Thanh toán đơn hàng</h1>
+        <p>Hoàn tất đơn hàng của bạn trong vài bước đơn giản.</p>
+    </div>
+</div>
+
+<div class="grid-wide">
+    <div class="card">
+        <h2>Chi tiết giỏ hàng</h2>
+        {% for item in items %}
+            <p>{{ item.product.name }} x {{ item.quantity }} = {{ item.subtotal|floatformat:0 }} VND</p>
+        {% endfor %}
+        <h3>Tổng tiền: {{ total|floatformat:0 }} VND</h3>
+    </div>
+
+    <div class="card">
+        <h2>Thông tin giao hàng</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Họ tên</label>
+                <input type="text" name="full_name" required>
+            </div>
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <input type="text" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ giao hàng</label>
+                <textarea name="address" required></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Đặt hàng</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

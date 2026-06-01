@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-panel">
+    <div>
+        <h1>Tea Shop AI</h1>
+        <p>Tinh hoa trà Nhật trong từng lựa chọn. Khám phá bộ sưu tập trà cao cấp và nhận gợi ý từ AI tư vấn trà.</p>
+    </div>
+    <div class="card">
+        <form method="get" class="search-panel">
+            <div class="form-group">
+                <label for="search">Tìm kiếm trà</label>
+                <input id="search" type="text" name="q" value="{{ keyword|default:'' }}" placeholder="Nhập tên trà, hương vị hoặc công dụng">
+            </div>
+            <div class="form-group">
+                <label for="category">Lọc danh mục</label>
+                <select id="category" name="category">
+                    <option value="">Tất cả loại trà</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category_id == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+</div>
+
+<div class="grid">
+    {% for product in products %}
+        <article class="product-card card">
+            {% if product.image %}
+                <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <div class="product-image"></div>
+            {% endif %}
+            <div>
+                <span class="badge">{{ product.category.name }}</span>
+                <h3>{{ product.name }}</h3>
+                <p class="product-meta">{{ product.taste }}</p>
+                <p class="price">{{ product.price|floatformat:0 }} VND</p>
+            </div>
+            <a class="btn btn-primary" href="{% url 'product_detail' product.id %}">Xem chi tiết</a>
+        </article>
+    {% empty %}
+        <div class="card">
+            <h2>Không có sản phẩm</h2>
+            <p>Hiện chưa có trà nào trong cửa hàng. Vui lòng thử lại sau.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "manager/base_admin.html" %}
+
+{% block page_title %}Quản lý sản phẩm{% endblock %}
+
+{% block content %}
+
+<div class="toolbar">
+    <form method="get">
+        <input class="admin-input" type="text" name="q" placeholder="Tìm sản phẩm..." value="{{ keyword|default:'' }}">
+        <button class="admin-btn" type="submit">Tìm kiếm</button>
+    </form>
+
+    <a class="admin-btn" href="{% url 'admin_product_create' %}">+ Thêm sản phẩm</a>
+</div>
+
+<div class="admin-section">
+    <table>
+        <tr>
+            <th>Ảnh</th>
+            <th>Tên</th>
+            <th>Danh mục</th>
+            <th>Giá</th>
+            <th>Tồn kho</th>
+            <th>AI</th>
+            <th>Hành động</th>
+        </tr>
+
+        {% for product in products %}
+        <tr>
+            <td>
+                {% if product.image %}
+                    <img class="table-img" src="{{ product.image.url }}">
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category.name }}</td>
+            <td>{{ product.price }} VND</td>
+            <td>{{ product.stock }}</td>
+            <td>
+                {% if product.embedding %}
+                    Đã có
+                {% else %}
+                    Chưa có
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'admin_product_update' product.id %}">Sửa</a>
+                |
+                <a class="danger" href="{% url 'admin_product_delete' product.id %}">Xóa</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">Chưa có sản phẩm.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<p class="note">
+    Sau khi thêm hoặc sửa sản phẩm, nếu muốn AI nhận dữ liệu mới, hãy chạy:
+    <code>python manage.py embed_products</code>
+</p>
+
+{% endblock %}

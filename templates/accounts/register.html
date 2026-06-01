@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký | Tea Shop AI</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+
+<main class="auth-page">
+    <section class="auth-visual">
+        <div class="auth-overlay"></div>
+
+        <div class="brand-box">
+            <div class="brand-mark">茶</div>
+            <h1>Tea Shop AI</h1>
+            <p>Tinh hoa trà Nhật trong từng lựa chọn.</p>
+        </div>
+
+        <div class="visual-caption">
+            <span>Create your tea journey</span>
+            <h2>Bắt đầu hành trình thưởng trà theo phong cách riêng.</h2>
+        </div>
+    </section>
+
+    <section class="auth-content">
+        <div class="auth-card">
+            <p class="eyebrow">Join us</p>
+            <h2>Đăng ký thành viên</h2>
+            <p class="subtitle">
+                Tạo tài khoản để mua trà, quản lý đơn hàng và sử dụng AI tư vấn.
+            </p>
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                <div class="field-group">
+                    <label for="{{ form.username.id_for_label }}">Tên đăng nhập</label>
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                        <small class="field-error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <div class="field-group">
+                    <label for="{{ form.password1.id_for_label }}">Mật khẩu</label>
+                    {{ form.password1 }}
+                    {% for error in form.password1.errors %}
+                        <small class="field-error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <div class="password-hints">
+                    <p>Mật khẩu nên có ít nhất 8 ký tự, không quá giống thông tin cá nhân và không hoàn toàn là số.</p>
+                </div>
+
+                <div class="field-group">
+                    <label for="{{ form.password2.id_for_label }}">Xác nhận mật khẩu</label>
+                    {{ form.password2 }}
+                    {% for error in form.password2.errors %}
+                        <small class="field-error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="auth-btn">Tạo tài khoản</button>
+            </form>
+
+            <p class="switch-link">
+                Đã có tài khoản?
+                <a href="{% url 'login' %}">Đăng nhập</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Dashboard quản trị</h1>
+
+<div class="grid">
+    <div class="card">
+        <h3>Tổng doanh thu</h3>
+        <h2>{{ total_revenue }} VND</h2>
+    </div>
+
+    <div class="card">
+        <h3>Tổng đơn hàng</h3>
+        <h2>{{ total_orders }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Đơn chờ xử lý</h3>
+        <h2>{{ pending_orders }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Đơn hoàn thành</h3>
+        <h2>{{ completed_orders }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Sản phẩm</h3>
+        <h2>{{ total_products }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Khách hàng</h3>
+        <h2>{{ total_users }}</h2>
+    </div>
+</div>
+
+<h2>Đơn hàng gần đây</h2>
+
+<div class="card">
+    <table width="100%" cellpadding="10">
+        <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Ngày đặt</th>
+        </tr>
+
+        {% for order in recent_orders %}
+        <tr>
+            <td>#{{ order.id }}</td>
+            <td>{{ order.full_name }}</td>
+            <td>{{ order.total_price }} VND</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.created_at }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Chưa có đơn hàng.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<h2>Sản phẩm bán chạy</h2>
+
+<div class="card">
+    {% for item in top_products %}
+        <p>{{ item.product__name }} - Đã bán: {{ item.total_sold }}</p>
+    {% empty %}
+        <p>Chưa có dữ liệu bán hàng.</p>
+    {% endfor %}
+</div>
+
+<br>
+
+<a class="btn" href="/admin/">Vào Django Admin</a>
+{% endblock %}
