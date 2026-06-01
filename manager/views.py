@@ -66,6 +66,9 @@ def admin_product_list(request):
     if keyword:
         products = products.filter(name__icontains=keyword)
 
+    for product in products:
+        product.has_embedding_ai = product.embedding is not None
+
     return render(request, "manager/product_list.html", {
         "products": products,
         "keyword": keyword,
