@@ -1,0 +1,18 @@
+{% extends "manager/base_admin.html" %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="admin-section">
+    <h2>Bạn có chắc muốn xóa?</h2>
+    <p>{{ object }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="admin-btn danger-btn" type="submit">Xóa</button>
+        <a class="admin-btn secondary" href="{% url cancel_url %}">Hủy</a>
+    </form>
+</div>
+
+{% endblock %}

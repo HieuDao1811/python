@@ -1,0 +1,39 @@
+{% extends "manager/base_admin.html" %}
+
+{% block page_title %}Quản lý danh mục{% endblock %}
+
+{% block content %}
+
+<div class="toolbar">
+    <a class="admin-btn" href="{% url 'admin_category_create' %}">+ Thêm danh mục</a>
+</div>
+
+<div class="admin-section">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tên danh mục</th>
+            <th>Mô tả</th>
+            <th>Hành động</th>
+        </tr>
+
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.description }}</td>
+            <td>
+                <a href="{% url 'admin_category_update' category.id %}">Sửa</a>
+                |
+                <a class="danger" href="{% url 'admin_category_delete' category.id %}">Xóa</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Chưa có danh mục.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

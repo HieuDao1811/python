@@ -1,0 +1,46 @@
+{% extends "manager/base_admin.html" %}
+
+{% block page_title %}Chi tiết đơn hàng #{{ order.id }}{% endblock %}
+
+{% block content %}
+
+<div class="admin-section">
+    <h2>Thông tin khách hàng</h2>
+    <p><strong>Họ tên:</strong> {{ order.full_name }}</p>
+    <p><strong>Số điện thoại:</strong> {{ order.phone }}</p>
+    <p><strong>Địa chỉ:</strong> {{ order.address }}</p>
+    <p><strong>Tổng tiền:</strong> {{ order.total_price }} VND</p>
+
+    <form method="post" action="{% url 'admin_order_update_status' order.id %}">
+        {% csrf_token %}
+        <label>Trạng thái đơn hàng</label>
+        {{ form.status }}
+        <button class="admin-btn" type="submit">Cập nhật</button>
+    </form>
+</div>
+
+<div class="admin-section">
+    <h2>Sản phẩm trong đơn</h2>
+
+    <table>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Thành tiền</th>
+        </tr>
+
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price }} VND</td>
+            <td>{{ item.subtotal }} VND</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<a class="admin-btn secondary" href="{% url 'admin_order_list' %}">Quay lại</a>
+
+{% endblock %}

@@ -79,8 +79,7 @@
             <a href="/ai/">AI tư vấn trà</a>
 
             {% if user.is_staff or user.is_superuser %}
-                <a href="/dashboard/">Dashboard</a>
-                <a href="/admin/">Django Admin</a>
+                <a href="/admin/">Trang quản trị</a>
             {% endif %}
 
             <span>Xin chào, {{ user.username }}</span>
